@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interval Picker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .interval-checkboxes {
+            margin-bottom: 20px;
+        }
+
+        .interval-checkboxes label {
+            display: inline-block;
+            margin: 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"] {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Interval Picker</h1>
+    <p>Select intervals and click the button to see a random one!</p>
+
+    <!-- Button to select/deselect all checkboxes -->
+    <button onclick="toggleSelectAll()">Select/Deselect All</button>
+
+    <!-- Interval checkboxes -->
+    <div class="interval-checkboxes">
+        <label>
+            <input type="checkbox" id="minorSecond" checked> Minor 2nd (m2)
+        </label>
+        <label>
+            <input type="checkbox" id="majorSecond" checked> Major 2nd (M2)
+        </label>
+        <label>
+            <input type="checkbox" id="minorThird" checked> Minor 3rd (m3)
+        </label>
+        <label>
+            <input type="checkbox" id="majorThird" checked> Major 3rd (M3)
+        </label>
+        <label>
+            <input type="checkbox" id="perfectFourth" checked> Perfect 4th (P4)
+        </label>
+        <label>
+            <input type="checkbox" id="tritone" checked> Tritone (TT)
+        </label>
+        <label>
+            <input type="checkbox" id="perfectFifth" checked> Perfect 5th (P5)
+        </label>
+        <label>
+            <input type="checkbox" id="minorSixth" checked> Minor 6th (m6)
+        </label>
+        <label>
+            <input type="checkbox" id="majorSixth" checked> Major 6th (M6)
+        </label>
+        <label>
+            <input type="checkbox" id="minorSeventh" checked> Minor 7th (m7)
+        </label>
+        <label>
+            <input type="checkbox" id="majorSeventh" checked> Major 7th (M7)
+        </label>
+        <label>
+            <input type="checkbox" id="octave" checked> Octave (P8)
+        </label>
+    </div>
+
+    <!-- Display the result -->
+    <div class="result">
+        <p id="intervalDisplay">Select intervals and click below to see a random one!</p>
+    </div>
+
+    <!-- Button to display a random interval -->
+    <button onclick="pickRandomInterval()">Pick Random Interval</button>
+
+    <script>
+        // Function to pick a random interval from the selected ones
+        function pickRandomInterval() {
+            const intervals = [
+                { id: 'minorSecond', name: "Minor 2nd (m2)" },
+                { id: 'majorSecond', name: "Major 2nd (M2)" },
+                { id: 'minorThird', name: "Minor 3rd (m3)" },
+                { id: 'majorThird', name: "Major 3rd (M3)" },
+                { id: 'perfectFourth', name: "Perfect 4th (P4)" },
+                { id: 'tritone', name: "Tritone (TT)" },
+                { id: 'perfectFifth', name: "Perfect 5th (P5)" },
+                { id: 'minorSixth', name: "Minor 6th (m6)" },
+                { id: 'majorSixth', name: "Major 6th (M6)" },
+                { id: 'minorSeventh', name: "Minor 7th (m7)" },
+                { id: 'majorSeventh', name: "Major 7th (M7)" },
+                { id: 'octave', name: "Octave (P8)" }
+            ];
+
+            // Filter intervals based on selected checkboxes
+            const selectedIntervals = intervals.filter(interval => document.getElementById(interval.id).checked);
+
+            if (selectedIntervals.length === 0) {
+                document.getElementById('intervalDisplay').textContent = "Please select at least one interval!";
+                return;
+            }
+
+            // Pick a random interval from the selected ones
+            const randomIndex = Math.floor(Math.random() * selectedIntervals.length);
+            const randomInterval = selectedIntervals[randomIndex];
+
+            document.getElementById('intervalDisplay').textContent = `Random Interval: ${randomInterval.name}`;
+        }
+
+        // Function to toggle select/deselect all checkboxes
+        function toggleSelectAll() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const allSelected = Array.from(checkboxes).every(checkbox => checkbox.checked);
+
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = !allSelected;
+            });
+        }
+    </script>
+
+</body>
+
+</html>
